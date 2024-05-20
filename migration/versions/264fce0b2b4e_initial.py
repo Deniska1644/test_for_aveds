@@ -1,9 +1,8 @@
+"""'initial'
 
-"""initial
-
-Revision ID: 84e085e68efe
+Revision ID: 264fce0b2b4e
 Revises: 
-Create Date: 2024-05-11 16:42:25.314713
+Create Date: 2024-05-20 16:50:27.700631
 
 """
 from typing import Sequence, Union
@@ -13,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '84e085e68efe'
+revision: str = '264fce0b2b4e'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -31,6 +30,8 @@ def upgrade() -> None:
     sa.Column('is_superuser', sa.Boolean(), nullable=False),
     sa.Column('is_verified', sa.Boolean(), nullable=False),
     sa.Column('bot_status', sa.Boolean(), nullable=True),
+    sa.Column('tg_name', sa.String(), nullable=True),
+    sa.Column('verify_tg', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

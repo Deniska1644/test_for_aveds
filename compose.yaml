@@ -5,29 +5,32 @@ services:
     image: postgres:15
     container_name: postrgre
     ports:
-      - 5432:5432
-    env_file:
-      - .env-for-compose
-    
+      - 5433:5433
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    command: -p 5433
 
   fastapi-app:
     build: 
       context: .
     env_file:
-    - .env-for-compose
+    - .env
     container_name: fastapi_app
     ports:
       - 9999:8000
     depends_on:
       - postrgre-db
-    command: alembic upgrade 84e085e68efe
-      && alembic upgrade 8a276ed575be
-      && ./bot
-      && python3 main.py
-      && ../srs
-      && uvicorn main:app --host 127.0.0.1 --port 8000
+    command: bash -c "cd ../
+      && alembic upgrade head
+      && cd src
+      && uvicorn main:app --host 0.0.0.0 --port 8000"
+
+    #   && uvicorn main:app --host 127.0.0.1 --port 8000
   
-    
+        # alembic upgrade 84e085e68efe
+      # && alembic upgrade 8a276ed575be
 
   # tg-bot:
   #   env_file:
